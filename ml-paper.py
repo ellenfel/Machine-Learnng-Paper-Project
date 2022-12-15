@@ -27,7 +27,7 @@ df =pd.read_csv('/home/ellenfel/Desktop/repos/Machine-Learning-Project/Data/data
 
 
 
-#Clean and prepare data¶
+#Clean and prepare data
 df.drop('id',axis=1,inplace=True)
 df.drop('Unnamed: 32',axis=1,inplace=True)
 # size of the dataframe
@@ -61,11 +61,13 @@ axes = axes.ravel()
 for idx,ax in enumerate(axes):
     ax.figure
     binwidth= (max(df[features_mean[idx]]) - min(df[features_mean[idx]]))/50
-    ax.hist([dfM[features_mean[idx]],dfB[features_mean[idx]]], bins=np.arange(min(df[features_mean[idx]]), max(df[features_mean[idx]]) + binwidth, binwidth) , alpha=0.5,stacked=True, normed = True, label=['M','B'],color=['r','g'])
+    ax.hist([dfM[features_mean[idx]],dfB[features_mean[idx]]], bins=np.arange(min(df[features_mean[idx]]), max(df[features_mean[idx]]) + binwidth, binwidth) , alpha=0.5,stacked=True, density = True, label=['M','B'],color=['r','g'])
     ax.legend(loc='upper right')
     ax.set_title(features_mean[idx])
 plt.tight_layout()
 plt.show()
+
+#Creating a test set and a training set
 
 
 
