@@ -68,6 +68,57 @@ plt.tight_layout()
 plt.show()
 
 #Creating a test set and a training set
+traindf, testdf = train_test_split(df, test_size = 0.3)
+
+#Model Classification
+#Generic function for making a classification model and accessing the performance. 
+# From AnalyticsVidhya tutorial
+def classification_model(model, data, predictors, outcome):
+  #Fit the model:
+  model.fit(data[predictors],data[outcome])
+  
+  #Make predictions on training set:
+  predictions = model.predict(data[predictors])
+  
+  #Print accuracy
+  accuracy = metrics.accuracy_score(predictions,data[outcome])
+  print("Accuracy : %s" % "{0:.3%}".format(accuracy))
+
+  #Perform k-fold cross-validation with 5 folds
+  kf = KFold(5,shuffle=False) #bug
+  error = []
+  for train, test in kf:
+    # Filter training data
+    train_predictors = (data[predictors].iloc[train,:])
+    
+    # The target we're using to train the algorithm.
+    train_target = data[outcome].iloc[train]
+    
+    # Training the algorithm using the predictors and target.
+    model.fit(train_predictors, train_target)
+    
+    #Record error from each cross-validation run
+    error.append(model.score(data[predictors].iloc[test,:], data[outcome].iloc[test]))
+    
+    print("Cross-Validation Score : %s" % "{0:.3%}".format(np.mean(error)))
+    
+  #Fit the model again so that it can be refered outside the function:
+  model.fit(data[predictors],data[outcome]) 
+  
+  
+  
+
+#Logistic Regression model
+predictor_var = ['radius_mean','perimeter_mean','area_mean','compactness_mean','concave points_mean']
+outcome_var='diagnosis'
+model=LogisticRegression()
+classification_model(model,traindf,predictor_var,outcome_var)
+
+
+
+
+
+
 
 
 
