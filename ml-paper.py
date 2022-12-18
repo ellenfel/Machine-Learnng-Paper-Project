@@ -53,7 +53,7 @@ dfM=df[df['diagnosis'] ==1]
 dfB=df[df['diagnosis'] ==0]
 
 
-
+###study###
 #Stack the data
 plt.rcParams.update({'font.size': 8})
 fig, axes = plt.subplots(nrows=5, ncols=2, figsize=(8,10))
@@ -111,8 +111,6 @@ def evaluate_model(model, X_test, y_test):
             'fpr': fpr, 'tpr': tpr, 'auc': auc, 'cm': cm}
 
 from sklearn import tree
-
-
 ### Building Decision Tree model ###
 dtc = tree.DecisionTreeClassifier(random_state=0)
 dtc.fit(X_train, y_train)
