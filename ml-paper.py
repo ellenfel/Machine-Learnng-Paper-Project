@@ -84,7 +84,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, rando
 
 
 ################################################
-#eval func
+#evaluation func
 
 def evaluate_model(model, X_test, y_test):
     from sklearn import metrics
@@ -112,7 +112,8 @@ def evaluate_model(model, X_test, y_test):
 
 from sklearn import tree
 
-# Building Decision Tree model 
+
+### Building Decision Tree model ###
 dtc = tree.DecisionTreeClassifier(random_state=0)
 dtc.fit(X_train, y_train)
 
@@ -144,6 +145,26 @@ print('F1 Score:', rf_eval['f1'])
 print('Cohens Kappa Score:', rf_eval['kappa'])
 print('Area Under Curve:', rf_eval['auc'])
 print('Confusion Matrix:\n', rf_eval['cm'])
+
+
+
+from sklearn.naive_bayes import GaussianNB
+#Calling the Class
+naive_bayes = GaussianNB()
+ 
+#Fitting the data to the classifier
+naive_bayes.fit(X_train , y_train)
+ 
+#Predict on test data
+y_pred = naive_bayes.predict(X_test)
+naive_eval = evaluate_model(naive_bayes, X_test, y_test)
+print('Accuracy:', naive_eval['acc'])
+print('Precision:', naive_eval['prec'])
+print('Recall:', naive_eval['rec'])
+print('F1 Score:', naive_eval['f1'])
+print('Cohens Kappa Score:', naive_eval['kappa'])
+print('Area Under Curve:', naive_eval['auc'])
+print('Confusion Matrix:\n', naive_eval['cm'])
 
 
 
