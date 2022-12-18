@@ -171,6 +171,19 @@ print('Confusion Matrix:\n', naive_eval['cm'])
 ################################################
 
 
+from sklearn.ensemble import AdaBoostClassifier
+abc = AdaBoostClassifier(n_estimators=50,
+                         learning_rate=1)
+ada_boost = abc.fit(X_train, y_train)
+y_pred = ada_boost.predict(X_test)
+ada_beval = evaluate_model(ada_boost, X_test, y_test)
+print('Accuracy:', ada_beval['acc'])
+print('Precision:', ada_beval['prec'])
+print('Recall:', ada_beval['rec'])
+print('F1 Score:', ada_beval['f1'])
+print('Cohens Kappa Score:', ada_beval['kappa'])
+print('Area Under Curve:', ada_beval['auc'])
+print('Confusion Matrix:\n', ada_beval['cm'])
 
 
 
