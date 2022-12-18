@@ -146,7 +146,9 @@ print('Cohens Kappa Score:', rf_eval['kappa'])
 print('Area Under Curve:', rf_eval['auc'])
 print('Confusion Matrix:\n', rf_eval['cm'])
 
+################################################
 
+### Naive Bayes ###
 
 from sklearn.naive_bayes import GaussianNB
 #Calling the Class
@@ -165,6 +167,10 @@ print('F1 Score:', naive_eval['f1'])
 print('Cohens Kappa Score:', naive_eval['kappa'])
 print('Area Under Curve:', naive_eval['auc'])
 print('Confusion Matrix:\n', naive_eval['cm'])
+
+################################################
+
+
 
 
 
