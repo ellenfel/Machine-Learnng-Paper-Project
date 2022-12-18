@@ -71,10 +71,9 @@ plt.show()
 traindf, testdf = train_test_split(df, test_size = 0.3)
 
 
-################################################
-################################################
 
-### Randdom Forest ###
+################################################
+#Data preprocessing 
 
 X = df.loc[:, df.columns != 'diagnosis']
 y = df.iloc[:,:1]
@@ -82,19 +81,10 @@ y = df.iloc[:,:1]
 from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 0)
 
-from sklearn.ensemble import RandomForestClassifier
-rf_clf = RandomForestClassifier(criterion='entropy')   
-rf_clf.fit(X_train,y_train)
-
-y_pred = rf_clf.predict(X_test)
-
-from sklearn.metrics import accuracy_score,classification_report,confusion_matrix
-accuracy_score(y_test,y_pred)
 
 
 ################################################
-################################################
-
+#eval func
 
 def evaluate_model(model, X_test, y_test):
     from sklearn import metrics
@@ -138,6 +128,22 @@ print('Cohens Kappa Score:', dtc_eval['kappa'])
 print('Area Under Curve:', dtc_eval['auc'])
 print('Confusion Matrix:\n', dtc_eval['cm'])
 
+################################################
+
+### Randdom Forest ###
+
+from sklearn.ensemble import RandomForestClassifier
+rf_clf = RandomForestClassifier(criterion='entropy')   
+rf_clf.fit(X_train,y_train)
+
+rf_eval = evaluate_model(rf_clf, X_test, y_test)
+print('Accuracy:', rf_eval['acc'])
+print('Precision:', rf_eval['prec'])
+print('Recall:', rf_eval['rec'])
+print('F1 Score:', rf_eval['f1'])
+print('Cohens Kappa Score:', rf_eval['kappa'])
+print('Area Under Curve:', rf_eval['auc'])
+print('Confusion Matrix:\n', rf_eval['cm'])
 
 
 
@@ -162,6 +168,8 @@ print('Confusion Matrix:\n', dtc_eval['cm'])
 
 
 
+################################################
+################################################
 
 
 #  kf = KFold(5,shuffle=False) #bug
