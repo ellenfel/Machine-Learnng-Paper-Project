@@ -73,7 +73,7 @@ traindf, testdf = train_test_split(df, test_size = 0.3)
 
 
 ################################################
-#Data preprocessing 
+#end of data preprocessing - Train test split
 
 X = df.loc[:, df.columns != 'diagnosis']
 y = df.iloc[:,:1]
@@ -110,8 +110,11 @@ def evaluate_model(model, X_test, y_test):
     return {'acc': acc, 'prec': prec, 'rec': rec, 'f1': f1, 'kappa': kappa, 
             'fpr': fpr, 'tpr': tpr, 'auc': auc, 'cm': cm}
 
+################################################
+
+###  Decision Tree model ###
+
 from sklearn import tree
-### Building Decision Tree model ###
 dtc = tree.DecisionTreeClassifier(random_state=0)
 dtc.fit(X_train, y_train)
 
@@ -168,6 +171,7 @@ print('Confusion Matrix:\n', naive_eval['cm'])
 
 ################################################
 
+### Ada Boost ###
 
 from sklearn.ensemble import AdaBoostClassifier
 abc = AdaBoostClassifier(n_estimators=50,
@@ -184,6 +188,21 @@ print('Area Under Curve:', ada_beval['auc'])
 print('Confusion Matrix:\n', ada_beval['cm'])
 
 
+
+###feature importance
+from matplotlib import pyplot
+model = LogisticRegression()
+model.fit(X, y)
+importance = model.coef_[0]
+# summarize feature importance
+for i,v in enumerate(importance):
+	print('Feature: %0d, Score: %.5f' % (i,v))
+# plot feature importance
+pyplot.bar([x for x in range(len(importance))], importance)
+pyplot.show()
+
+cols = [20,0,26,25,21,1,2,22,6,27]
+z = X.iloc[:,cols].copy
 
 
 
