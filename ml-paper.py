@@ -188,6 +188,9 @@ print('Area Under Curve:', ada_beval['auc'])
 print('Confusion Matrix:\n', ada_beval['cm'])
 
 
+################################################
+################################################
+
 
 ###feature importance
 from matplotlib import pyplot
@@ -202,7 +205,20 @@ pyplot.bar([x for x in range(len(importance))], importance)
 pyplot.show()
 
 cols = [20,0,26,25,21,1,2,22,6,27]
-z = X.iloc[:,cols].copy
+z = X.iloc[:,cols].copy()
+
+model = LogisticRegression()
+model.fit(z, y)
+importance = model.coef_[0]
+# summarize feature importance
+for i,v in enumerate(importance):
+	print('Feature: %0d, Score: %.5f' % (i,v))
+# plot feature importance
+pyplot.bar([x for x in range(len(importance))], importance)
+pyplot.show()
+
+X_train, X_test, y_train, y_test = train_test_split(z, y, test_size = 0.2, random_state = 0)
+
 
 
 
