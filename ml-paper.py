@@ -116,7 +116,7 @@ def evaluate_model(model, X_test, y_test):
 
 from sklearn import tree
 
-def sklearn_eval():
+def sklearn_eval(X_train,y_train):
     dtc = tree.DecisionTreeClassifier(random_state=0)
     dtc.fit(X_train, y_train)
     
@@ -138,7 +138,7 @@ def sklearn_eval():
 
 from sklearn.ensemble import RandomForestClassifier
 
-def randomforest_eval():
+def randomforest_eval(X_train,y_train):
     rf_clf = RandomForestClassifier(criterion='entropy')   
     rf_clf.fit(X_train,y_train)
     
@@ -157,7 +157,7 @@ def randomforest_eval():
 
 from sklearn.naive_bayes import GaussianNB
 
-def naivebayes_eval():
+def naivebayes_eval(X_train,y_train):
     #Calling the Class
     naive_bayes = GaussianNB()
      
@@ -181,7 +181,7 @@ def naivebayes_eval():
 
 from sklearn.ensemble import AdaBoostClassifier
 
-def adaboost():
+def adaboost(X_train,y_train):
     abc = AdaBoostClassifier(n_estimators=50,
              learning_rate=1)
     ada_boost = abc.fit(X_train, y_train)
@@ -197,10 +197,10 @@ def adaboost():
 
 
 # acc of models
-sklearn_eval()
-randomforest_eval()
-naivebayes_eval()
-adaboost()
+sklearn_eval(X_train,y_train)
+randomforest_eval(X_train,y_train)
+naivebayes_eval(X_train,y_train)
+adaboost(X_train,y_train)
 
 ################################################
 ################################################
@@ -237,11 +237,11 @@ pyplot.show()
 X_train, X_test, y_train, y_test = train_test_split(z, y, test_size = 0.2, random_state = 0)
 #re execute all model to compare
 # acc of models
-sklearn_eval()
-randomforest_eval()
-naivebayes_eval()
-adaboost()
-sklearn_eval()
+sklearn_eval(X_train,y_train)
+randomforest_eval(X_train,y_train)
+naivebayes_eval(X_train,y_train)
+adaboost(X_train,y_train)
+
 
 #top 5 feature
 cols = [0,1,3,8,9]
@@ -260,127 +260,10 @@ pyplot.show()
 X_train, X_test, y_train, y_test = train_test_split(z1, y, test_size = 0.2, random_state = 0)
 #re execute all model to compare
 # acc of models
-sklearn_eval()
-randomforest_eval()
-naivebayes_eval()
-adaboost()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-################################################
-################################################
-
-
-#  kf = KFold(5,shuffle=False) #bug
-
-#Generic function for making a classification model and accessing the performance. 
-# From AnalyticsVidhya tutorial
-def classification_model(model, data, predictors, outcome):
-  #Fit the model:
-  model.fit(data[predictors],data[outcome])
-  
-  #Make predictions on training set:
-  predictions = model.predict(data[predictors])
-  
-  #Print accuracy
-  accuracy = metrics.accuracy_score(predictions,data[outcome])
-  print("Accuracy : %s" % "{0:.3%}".format(accuracy))
-
-  #Perform k-fold cross-validation with 5 folds
-  kf = KFold(n_splits=5,  shuffle=False, random_state=None)
-  error = []
-  for train, test in kf:
-    # Filter training data
-    train_predictors = (data[predictors].iloc[train,:])
-    
-    # The target we're using to train the algorithm.
-    train_target = data[outcome].iloc[train]
-    
-    # Training the algorithm using the predictors and target.
-    model.fit(train_predictors, train_target)
-    
-    #Record error from each cross-validation run
-    error.append(model.score(data[predictors].iloc[test,:], data[outcome].iloc[test]))
-    
-    print("Cross-Validation Score : %s" % "{0:.3%}".format(np.mean(error)))
-    
-  #Fit the model again so that it can be refered outside the function:
-  model.fit(data[predictors],data[outcome]) 
-  
-  
-
-#Logistic Regression model
-predictor_var = ['radius_mean','perimeter_mean','area_mean','compactness_mean','concave points_mean']
-outcome_var='diagnosis'
-model=LogisticRegression()
-classification_model(model,traindf,predictor_var,outcome_var)
-
-predictor_var = ['radius_mean']
-model=LogisticRegression()
-classification_model(model,traindf,predictor_var,outcome_var)
-
-
-#Decision Tree Model
-predictor_var = ['radius_mean','perimeter_mean','area_mean','compactness_mean','concave points_mean']
-model = DecisionTreeClassifier()
-classification_model(model,traindf,predictor_var,outcome_var)
-
-
-#Random Forest
-# Use all the features of the nucleus
-predictor_var = features_mean
-model = RandomForestClassifier(n_estimators=100,min_samples_split=25, max_depth=7, max_features=2)
-classification_model(model, traindf,predictor_var,outcome_var)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+sklearn_eval(X_train,y_train)
+randomforest_eval(X_train,y_train)
+naivebayes_eval(X_train,y_train)
+adaboost(X_train,y_train)
 
 
 
