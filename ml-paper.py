@@ -115,84 +115,99 @@ def evaluate_model(model, X_test, y_test):
 ###  Decision Tree model ###
 
 from sklearn import tree
-dtc = tree.DecisionTreeClassifier(random_state=0)
-dtc.fit(X_train, y_train)
 
-# Evaluate Model
-dtc_eval = evaluate_model(dtc, X_test, y_test)
-
-# Print result
-print('Accuracy:', dtc_eval['acc'])
-print('Precision:', dtc_eval['prec'])
-print('Recall:', dtc_eval['rec'])
-print('F1 Score:', dtc_eval['f1'])
-print('Cohens Kappa Score:', dtc_eval['kappa'])
-print('Area Under Curve:', dtc_eval['auc'])
-print('Confusion Matrix:\n', dtc_eval['cm'])
+def sklearn_eval():
+    dtc = tree.DecisionTreeClassifier(random_state=0)
+    dtc.fit(X_train, y_train)
+    
+    # Evaluate Model
+    dtc_eval = evaluate_model(dtc, X_test, y_test)
+    
+    # Print result
+    print('Accuracy:', dtc_eval['acc'])
+    print('Precision:', dtc_eval['prec'])
+    print('Recall:', dtc_eval['rec'])
+    print('F1 Score:', dtc_eval['f1'])
+    print('Cohens Kappa Score:', dtc_eval['kappa'])
+    print('Area Under Curve:', dtc_eval['auc'])
+    print('Confusion Matrix:\n', dtc_eval['cm'])
 
 ################################################
 
 ### Randdom Forest ###
 
 from sklearn.ensemble import RandomForestClassifier
-rf_clf = RandomForestClassifier(criterion='entropy')   
-rf_clf.fit(X_train,y_train)
 
-rf_eval = evaluate_model(rf_clf, X_test, y_test)
-print('Accuracy:', rf_eval['acc'])
-print('Precision:', rf_eval['prec'])
-print('Recall:', rf_eval['rec'])
-print('F1 Score:', rf_eval['f1'])
-print('Cohens Kappa Score:', rf_eval['kappa'])
-print('Area Under Curve:', rf_eval['auc'])
-print('Confusion Matrix:\n', rf_eval['cm'])
+def randomforest_eval():
+    rf_clf = RandomForestClassifier(criterion='entropy')   
+    rf_clf.fit(X_train,y_train)
+    
+    rf_eval = evaluate_model(rf_clf, X_test, y_test)
+    print('Accuracy:', rf_eval['acc'])
+    print('Precision:', rf_eval['prec'])
+    print('Recall:', rf_eval['rec'])
+    print('F1 Score:', rf_eval['f1'])
+    print('Cohens Kappa Score:', rf_eval['kappa'])
+    print('Area Under Curve:', rf_eval['auc'])
+    print('Confusion Matrix:\n', rf_eval['cm'])
 
 ################################################
 
 ### Naive Bayes ###
 
 from sklearn.naive_bayes import GaussianNB
-#Calling the Class
-naive_bayes = GaussianNB()
- 
-#Fitting the data to the classifier
-naive_bayes.fit(X_train , y_train)
- 
-#Predict on test data
-y_pred = naive_bayes.predict(X_test)
-naive_eval = evaluate_model(naive_bayes, X_test, y_test)
-print('Accuracy:', naive_eval['acc'])
-print('Precision:', naive_eval['prec'])
-print('Recall:', naive_eval['rec'])
-print('F1 Score:', naive_eval['f1'])
-print('Cohens Kappa Score:', naive_eval['kappa'])
-print('Area Under Curve:', naive_eval['auc'])
-print('Confusion Matrix:\n', naive_eval['cm'])
+
+def naivebayes_eval():
+    #Calling the Class
+    naive_bayes = GaussianNB()
+     
+    #Fitting the data to the classifier
+    naive_bayes.fit(X_train , y_train)
+     
+    #Predict on test data
+    y_pred = naive_bayes.predict(X_test)
+    naive_eval = evaluate_model(naive_bayes, X_test, y_test)
+    print('Accuracy:', naive_eval['acc'])
+    print('Precision:', naive_eval['prec'])
+    print('Recall:', naive_eval['rec'])
+    print('F1 Score:', naive_eval['f1'])
+    print('Cohens Kappa Score:', naive_eval['kappa'])
+    print('Area Under Curve:', naive_eval['auc'])
+    print('Confusion Matrix:\n', naive_eval['cm'])
 
 ################################################
 
 ### Ada Boost ###
 
 from sklearn.ensemble import AdaBoostClassifier
-abc = AdaBoostClassifier(n_estimators=50,
-                         learning_rate=1)
-ada_boost = abc.fit(X_train, y_train)
-y_pred = ada_boost.predict(X_test)
-ada_beval = evaluate_model(ada_boost, X_test, y_test)
-print('Accuracy:', ada_beval['acc'])
-print('Precision:', ada_beval['prec'])
-print('Recall:', ada_beval['rec'])
-print('F1 Score:', ada_beval['f1'])
-print('Cohens Kappa Score:', ada_beval['kappa'])
-print('Area Under Curve:', ada_beval['auc'])
-print('Confusion Matrix:\n', ada_beval['cm'])
 
+def adaboost():
+    abc = AdaBoostClassifier(n_estimators=50,
+             learning_rate=1)
+    ada_boost = abc.fit(X_train, y_train)
+    y_pred = ada_boost.predict(X_test)
+    ada_beval = evaluate_model(ada_boost, X_test, y_test)
+    print('Accuracy:', ada_beval['acc'])
+    print('Precision:', ada_beval['prec'])
+    print('Recall:', ada_beval['rec'])
+    print('F1 Score:', ada_beval['f1'])
+    print('Cohens Kappa Score:', ada_beval['kappa'])
+    print('Area Under Curve:', ada_beval['auc'])
+    print('Confusion Matrix:\n', ada_beval['cm'])
+
+
+# acc of models
+sklearn_eval()
+randomforest_eval()
+naivebayes_eval()
+adaboost()
 
 ################################################
 ################################################
 
 
 ###feature importance
+###all 30 feature
 from matplotlib import pyplot
 model = LogisticRegression()
 model.fit(X, y)
@@ -204,6 +219,8 @@ for i,v in enumerate(importance):
 pyplot.bar([x for x in range(len(importance))], importance)
 pyplot.show()
 
+
+#top 10 feature
 cols = [20,0,26,25,21,1,2,22,6,27]
 z = X.iloc[:,cols].copy()
 
@@ -218,6 +235,36 @@ pyplot.bar([x for x in range(len(importance))], importance)
 pyplot.show()
 
 X_train, X_test, y_train, y_test = train_test_split(z, y, test_size = 0.2, random_state = 0)
+#re execute all model to compare
+# acc of models
+sklearn_eval()
+randomforest_eval()
+naivebayes_eval()
+adaboost()
+sklearn_eval()
+
+#top 5 feature
+cols = [0,1,3,8,9]
+z1 = z.iloc[:,cols].copy()
+
+model = LogisticRegression()
+model.fit(z1, y)
+importance = model.coef_[0]
+# summarize feature importance
+for i,v in enumerate(importance):
+	print('Feature: %0d, Score: %.5f' % (i,v))
+# plot feature importance
+pyplot.bar([x for x in range(len(importance))], importance)
+pyplot.show()
+
+X_train, X_test, y_train, y_test = train_test_split(z1, y, test_size = 0.2, random_state = 0)
+#re execute all model to compare
+# acc of models
+sklearn_eval()
+randomforest_eval()
+naivebayes_eval()
+adaboost()
+
 
 
 
