@@ -67,9 +67,6 @@ for idx,ax in enumerate(axes):
 plt.tight_layout()
 plt.show()
 
-#Creating a test set and a training set
-traindf, testdf = train_test_split(df, test_size = 0.3)
-
 
 
 ################################################

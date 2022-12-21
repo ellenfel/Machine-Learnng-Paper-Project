@@ -29,7 +29,8 @@ SMOTE algorithm.
 4. Rank the features using index value to measure the importance of features.
 5. Split the data into bootstrap samples for independently
 sampling with replacement from initial sampled data.
-6. Call Adaboost Model using n bootstrap samples.
+6. Call Algorithm 1 to train Adaboost Model using n bootstrap
+samples.
 7. Combine the prediction of n models using majority voting.
 8. Outcome of the prediction is winning class in the majority
 voting.
@@ -117,13 +118,6 @@ def evaluate_model(model, X_test, y_test):
 
     return {'acc': acc, 'prec': prec, 'rec': rec, 'f1': f1, 'kappa': kappa, 
             'fpr': fpr, 'tpr': tpr, 'auc': auc, 'cm': cm}
-
-#execute the funtions from ml-paper.py
-sklearn_eval(X_res,y_res)
-randomforest_eval(X_res,y_res)
-naivebayes_eval(X_res,y_res)
-adaboost(X_res,y_res)
-
 
 ################################################
 
