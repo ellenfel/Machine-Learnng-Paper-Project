@@ -25,8 +25,6 @@ from sklearn import metrics
 df =pd.read_csv('/home/ellenfel/Desktop/repos/Machine-Learning-Project/Data/data.csv'
                 ,header= 0)
 
-
-
 #Clean and prepare data
 df.drop('id',axis=1,inplace=True)
 df.drop('Unnamed: 32',axis=1,inplace=True)
@@ -68,7 +66,6 @@ plt.tight_layout()
 plt.show()
 
 
-
 ################################################
 #end of data preprocessing - Train test split
 
@@ -78,9 +75,8 @@ y = df.iloc[:,:1]
 from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 0)
 
-
-
 ################################################
+
 #evaluation func
 
 def evaluate_model(model, X_test, y_test):
@@ -247,6 +243,7 @@ z1 = z.iloc[:,cols].copy()
 model = LogisticRegression()
 model.fit(z1, y)
 importance = model.coef_[0]
+
 # summarize feature importance
 for i,v in enumerate(importance):
 	print('Feature: %0d, Score: %.5f' % (i,v))

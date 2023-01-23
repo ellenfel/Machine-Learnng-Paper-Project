@@ -39,11 +39,13 @@ voting.
 #Clean and prepare data
 df.drop('id',axis=1,inplace=True)
 df.drop('Unnamed: 32',axis=1,inplace=True)
-# size of the dataframe
+
+#size of the dataframe
 len(df)
 
 df.diagnosis.unique()
 
+#Binary Mapping 
 df['diagnosis'] = df['diagnosis'].map({'M':1,'B':0})
 df.head()
 
