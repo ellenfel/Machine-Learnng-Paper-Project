@@ -45,7 +45,7 @@ plt.title('Diagnosis (M=1 , B=0)')
 plt.show()
 
 #nucleus features vs diagnosis¶
-features_mean=list(df.columns[1:11])
+features_mean=list(df.columns[1:20])
 # split dataframe into two based on diagnosis
 dfM=df[df['diagnosis'] ==1]
 dfB=df[df['diagnosis'] ==0]
